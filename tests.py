@@ -29,21 +29,21 @@ class TestBooksCollector:
     def test_add_new_book_add_book_true(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
-        assert 'Гордость и предубеждение и зомби' in collector.books_genre
-
+        assert 'Гордость и предубеждение и зомби' in collector.get_books_genre()
+                
     # 1.1. Тест 1 метода add_new_book. У добавленной книги нет жанра.
     def test_add_new_book_add_book_without_genre_true(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби 2')
-        assert collector.books_genre['Гордость и предубеждение и зомби 2'] == ''
-
+        assert collector.get_books_genre() == {'Гордость и предубеждение и зомби 2': ''}
+        
     # 2. Тест 2 метода set_book_genre. Добавим 1 книгу с жанром и проверим её по жанру
     def test_set_book_genre_add_book_with_genre_true(self):
         collector = BooksCollector()
         collector.add_new_book('Чужие1')
         collector.set_book_genre('Чужие1', 'Фантастика')
-        assert collector.books_genre['Чужие1'] == 'Фантастика'
-
+        assert collector.get_book_genre('Чужие1') == 'Фантастика'
+    
     # 3. Тест 3 метода get_book_genre. Добавим 1 книгу с жанром и проверим её жанр по имени
     def test_get_book_genre_add_book_with_genre_true(self):
         collector = BooksCollector()
@@ -100,6 +100,5 @@ class TestBooksCollector:
     def test_get_list_of_favorites_books_add_books_true(self, books, genre):
         collector = BooksCollector()
         collector.add_new_book(books)
-        collector.set_book_genre(books, genre)
         collector.add_book_in_favorites(books)
         assert books in collector.get_list_of_favorites_books()
